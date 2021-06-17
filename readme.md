@@ -1,6 +1,6 @@
 # Описание gulp-сборки
 
-**Краткое описание**
+**Starter Gulp 4 + Tailwind CSS (JIT)**
 
 Запустить для дева - npm run dev
 
