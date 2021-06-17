@@ -2,6 +2,7 @@
 
 **Starter Gulp 4 + Tailwind CSS (JIT)**
 
+
 Запустить для дева - npm run dev
 
 Собрать для прода - сначала компилим dev (npm run dev), останавливаем, потом собираем из него прод (npm run prod)
