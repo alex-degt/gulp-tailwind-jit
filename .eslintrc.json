@@ -1,0 +1,33 @@
+{
+  "env": {
+    "jquery": true,
+	"es6": true,
+	"browser": true
+  },
+  "overrides": [
+    {
+      "files": [ "src/js/*.js" ],
+      "extends": [
+        "htmlacademy/es6"
+      ],
+      "rules": {
+        "indent": [
+          "error",
+          "tab"
+        ],
+        "semi": [
+          "error",
+          "always"
+        ],
+        "quotes": [
+          "error",
+          "double"
+        ],
+		"eol-last": [
+			"error",
+			"never"
+		]
+      }
+    }
+  ]
+}

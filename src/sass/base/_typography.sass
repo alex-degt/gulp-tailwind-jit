@@ -1,0 +1,89 @@
+$secondary: #001f3a
+$disable: #bac7d2
+
+$text-base: 1rem
+$text-lg: 1.125rem
+$text-2xl: 1.5rem
+
+.container-typography
+	margin-left: auto
+	margin-right: auto
+	max-width: 870px
+	padding-left: 15px
+	padding-right: 15px
+
+// Заголовки
+.typography
+	h1
+		margin-bottom: 4px
+		color: $secondary
+		font-size: $text-2xl
+		font-weight: 700
+		@media (min-width: 768px)
+			text-align: center
+			font-size: 40px
+	h2,
+	h3,
+	h4,
+	h5
+		color: $secondary
+		font-size: $text-lg
+		font-weight: 700
+		margin-bottom: 0.5rem
+		@media (min-width: 768px)
+			font-size: $text-2xl
+
+// Абзац
+.typography
+	p
+		margin-bottom: 1rem
+		color: $secondary
+		font-size: $text-base
+
+// Время
+.typography
+	time
+		display: block
+		width: 100%
+		margin-bottom: 1rem
+		text-align: center
+		color: #333
+		font-size: $text-base
+		line-height: 30px
+
+// Изображения
+.typography
+	img
+		flex-shrink: 0
+		width: 100%
+		margin-top: 1rem
+		margin-bottom: 1rem
+		@media (min-width: 768px)
+			margin-bottom: 2rem
+
+// Цитата
+.typography
+	blockquote
+		padding: 1.5rem
+		color: $secondary
+		border: 1px solid $disable
+		font-size: $text-lg
+		margin: 0.5rem 0
+		@media (min-width: 768px)
+			font-size: $text-2xl
+
+.typography
+	ul
+		list-style-type: disc
+		padding-left: 1.5rem
+		margin-bottom: 1rem
+	ol
+		list-style-type: auto
+		padding-left: 1.5rem
+		margin-bottom: 1rem
+	ul,
+	ol
+		li
+			margin-bottom: 0.5rem
+			&:last-child
+				margin-bottom: 0
