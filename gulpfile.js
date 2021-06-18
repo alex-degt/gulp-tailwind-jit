@@ -7,7 +7,10 @@ const del = require("del"); // Удаление папки с файлами
 const notify = require("gulp-notify"); // Модуль вывода ошибок
 const plumber = require("gulp-plumber"); // Модуль перехвата ошибок
 const concat = require("gulp-concat"); // Конкатенация файлов (слияние)
-const logSymbols = require("log-symbols"); // Переименование файлов
+const logSymbols = require("log-symbols"); // Вывод иконок в консоль
+const rename = require("gulp-rename"); // Переименование файлов
+const prettyData = require("gulp-pretty-data"); // Форматирование XML (SVG)
+const cheerio = require("gulp-cheerio"); // Манипулирование HTML и XML
 
 // HTML
 const fileinclude = require("gulp-file-include"); // include файлов в HTML (@@include('./file.svg') !!! ВАЖНО ОДИНАРНЫЕ КАВЫЧКИ)
@@ -29,15 +32,91 @@ const rigger = require("gulp-rigger"); // include JS в JS (//= ./file.js)
 
 // IMG
 const imagemin = require("gulp-imagemin"); // Сжатие изображений
+const svgo = require("gulp-svgo"); // Сжатие SVG
+const svgstore = require("gulp-svgstore"); // Создание SVG-спрайта
 
 // Общие таски
 
 function imagesoptimize() {
-	return src("./src/img/src/**/*")
+	return src(["./src/img/src/**/*", "!./src/img/src/for-sprite/**/*"], { nodir: true })
 		.pipe(newer("./src/img/dest/"))
-		.pipe(imagemin([imagemin.optipng({ optimizationLevel: 3 }), imagemin.mozjpeg({ progressive: true }), imagemin.svgo()]))
+		.pipe(imagemin([imagemin.optipng({ optimizationLevel: 3 }), imagemin.mozjpeg({ progressive: true })]))
 		.pipe(dest("./src/img/dest/"));
 }
+
+// SVGO: Настройки и их последовательность соответствует компрессору https://jakearchibald.github.io/svgomg/
+function svgsprite() {
+	return src(["./src/img/src/for-sprite/**/*.svg"])
+		.pipe(
+			svgo({
+				removeDoctype: true,
+				removeXMLProcInst: true,
+				removeComments: true,
+				removeMetadata: true,
+				removeXMLNS: false,
+				removeEditorsNSData: true,
+				cleanupAttrs: true,
+				inlineStyles: true,
+				minifyStyles: true,
+				convertStyleToAttrs: true,
+				cleanupIDs: true,
+				removeRasterImages: true,
+				removeUselessDefs: true,
+				cleanupListOfValues: true,
+				cleanupNumericValues: true,
+				convertColors: true,
+				removeUnknownsAndDefaults: true,
+				removeNonInheritableGroupAttrs: true,
+				removeUselessStrokeAndFill: true,
+				removeViewBox: true,
+				cleanupEnableBackground: true,
+				removeHiddenElems: true,
+				removeEmptyText: true,
+				convertShapeToPath: true,
+				moveElemsAttrsToGroup: true,
+				moveGroupAttrsToElems: true,
+				collapseGroups: true,
+				convertEllipseToCircle: true,
+				convertTransform: true,
+				removeEmptyAttrs: true,
+				removeEmptyContainers: true,
+				mergePaths: true,
+				removeUnusedNS: true,
+				reusePaths: true,
+				sortAttrs: true,
+				sortDefsChildren: true,
+				removeTitle: true,
+				removeDes: true,
+				removeDimensions: true,
+				removeStyleElement: true,
+				removeScriptElement: true,
+				convertPathData: true,
+			})
+		)
+		.pipe(svgstore({ inlineSvg: true }))
+		.pipe(
+			prettyData({
+				type: "prettify",
+				extensions: {
+					xlf: "xml",
+					svg: "xml",
+				},
+			})
+		)
+		.pipe(
+			cheerio({
+				run: function ($) {
+					$("svg").attr("style", "display:none");
+					$("[fill]").attr("fill", "currentColor");
+					$("[stroke]").attr("stroke", "currentColor");
+				},
+				parserOptions: { xmlMode: true },
+			})
+		)
+		.pipe(rename("sprite.svg"))
+		.pipe(dest("./src/img/dest/"));
+}
+
 function copyfonts() {
 	return src("./src/fonts/**/*").pipe(dest("./docs/fonts/"));
 }
@@ -155,6 +234,8 @@ function watchFiles() {
 	watch("./src/libs/**/*", series(copylibs, previewReload));
 	// Сжать изображения
 	watch("./src/img/src/**/*", imagesoptimize);
+	// Подготовка SVG для спрайта
+	watch("./src/img/src/for-sprite/**/*", svgsprite);
 	// Скопировать изображения если они изменились
 	watch("./src/img/dest/**/*", copyimg);
 
@@ -240,6 +321,7 @@ function prodScripts() {
 exports.default = series(
 	devClean,
 	imagesoptimize,
+	svgsprite,
 	copyimg,
 	copyfonts,
 	copylibs,
@@ -250,6 +332,7 @@ exports.default = series(
 
 exports.prod = series(
 	imagesoptimize,
+	svgsprite,
 	copyimg,
 	copyfonts,
 	copylibs,
