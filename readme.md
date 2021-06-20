@@ -1,5 +1,7 @@
 # Gulp 4 + Tailwind CSS (JIT) Starter Kit
 
+Стартовый шаблон для вёрстки с использованием Tailwind CSS (JIT).
+
 1. Установить все пакеты:
 ```
 npm i
