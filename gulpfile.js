@@ -121,7 +121,7 @@ function copyfonts() {
 	return src("./src/fonts/**/*").pipe(dest("./docs/fonts/"));
 }
 function copyimg() {
-	return src("./src/img/dest/**/*").pipe(dest("./docs/img/"));
+	return src(["./src/img/dest/**/*", "!./src/img/dest/sprite.svg"]).pipe(dest("./docs/img/"));
 }
 function copylibs() {
 	return src("./src/libs/**/*").pipe(dest("./docs/libs/"));
@@ -274,10 +274,15 @@ function prodHTML() {
 }
 
 function prodStylesTailwind() {
-	return src("./docs/css/tailwind.min.css")
+	const tailwindcss = require("tailwindcss");
+	return src("./src/sass/tailwind/*.scss")
+		.pipe(sass().on("error", sass.logError))
+		.pipe(dest("./src/sass/tailwind/"))
+		.pipe(postcss([tailwindcss("./tailwind.config.js"), require("autoprefixer")]))
+		.pipe(concat({ path: "tailwind.min.css" }))
 		.pipe(
 			purgecss({
-				content: ["./src/**/*.{html,js}", "./src/html/service/for-tailwind.html"],
+				content: ["./src/**/*.html", "./docs/js/scripts.min.js"],
 				defaultExtractor: (content) => {
 					const broadMatches = content.match(/[^<>"'`\s]*[^<>"'`\s:]/g) || [];
 					const innerMatches = content.match(/[^<>"'`\s.()]*[^<>"'`\s.():]/g) || [];
@@ -320,21 +325,24 @@ function prodScripts() {
 
 exports.default = series(
 	devClean,
+	devScripts,
 	imagesoptimize,
 	svgsprite,
 	copyimg,
 	copyfonts,
 	copylibs,
-	parallel(devStylesTailwind, devStyles, devScripts, devHTML), // Запустить задачи параллельно
+	parallel(devStylesTailwind, devStyles, devHTML), // Запустить задачи параллельно
 	livePreview,
 	watchFiles
 );
 
 exports.prod = series(
+	devClean,
+	prodScripts,
 	imagesoptimize,
 	svgsprite,
 	copyimg,
 	copyfonts,
 	copylibs,
-	parallel(prodStylesTailwind, prodStyles, prodScripts, prodHTML) // Запустить задачи параллельно
+	parallel(prodStylesTailwind, prodStyles, prodHTML) // Запустить задачи параллельно
 );

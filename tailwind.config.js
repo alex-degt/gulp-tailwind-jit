@@ -1,6 +1,6 @@
 module.exports = {
 	mode: "jit",
-	purge: ["./src/**/*.html"],
+	purge: ["./src/**/*.html", "./docs/js/scripts.min.js"],
 	darkMode: false,
 	theme: {
 		colors: {
@@ -43,6 +43,7 @@ module.exports = {
 			transparent: "var(--transparent)",
 			overlay: "var(--overlay)",
 		},
+		// Всё что будет задано внутри extend - добавит стили к уже существующим внутри tailwind, а не переопределит их
 		extend: {},
 	},
 	variants: {
