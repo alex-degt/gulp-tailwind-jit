@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="ru">
-	<!-- prettier-ignore -->
+	<!-- Head -->
 	@@include('./src/html/service/head.html')
 
 	<body class="body" id="body">
 		<!-- SVG-inline sprite -->
 		@@include('./src/img/dest/sprite.svg')
 
-		<!-- header -->
+		<!-- Header -->
 		<!-- @@include('./src/html/sections/header.html') -->
 
 		<main class="main" id="main">
+			<!-- Button component -->
+			@@include('./src/components/button/button.html')
+
 			<!-- Example HTML with Tailwind CSS -->
 			<div class="bg-gray-100">
 				<div class="max-w-7xl sm:px-6 lg:px-8 py-12 mx-auto">
@@ -80,10 +83,10 @@
 			<!-- // Example HTML with Tailwind CSS -->
 		</main>
 
-		<!-- footer -->
+		<!-- Footer -->
 		<!-- @@include('./src/html/sections/footer.html') -->
 
-		<!-- scripts -->
+		<!-- Scripts -->
 		@@include('./src/html/service/scripts.html')
 	</body>
 </html>

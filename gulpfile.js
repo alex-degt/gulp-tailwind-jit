@@ -43,8 +43,13 @@ const svgstore = require("gulp-svgstore"); // Создание SVG-спрайт�
 // Общие таски
 
 function clean() {
-	console.log("\n\t" + logSymbols.info, "Cleaning dist folder for fresh start.\n");
+	console.log("\n\t" + logSymbols.info, "Cleaning docs folder (docs/) for fresh start.\n");
 	return del("./docs/");
+}
+
+function cleanImg() {
+	console.log("\n\t" + logSymbols.info, "Cleaning images folder (src/img/dest) for fresh start.\n");
+	return del("./src/img/dest/");
 }
 
 function imagesOptimize() {
@@ -228,7 +233,7 @@ function livePreview(done) {
 
 function watchFiles() {
 	// JS
-	watch("./src/**/*.js", series(devScripts, previewReload));
+	watch(["./src/js/**/*.js", "./src/components/**/*.js"], series(devScripts, previewReload));
 	// Сжать изображения
 	watch("./src/img/src/**/*", imagesOptimize);
 	// Подготовка SVG для спрайта
@@ -242,9 +247,9 @@ function watchFiles() {
 	// Tailwind CSS стили
 	watch(["./tailwind.config.js", "./src/sass/tailwind/*.scss"], series(devStylesTailwind, previewReload));
 	// SASS стили
-	watch("./src/sass/**/*.sass", devStyles);
+	watch(["./src/sass/**/*.sass", "./src/components/**/*.sass"], devStyles);
 	// HTML
-	watch("./src/**/*.html", series(devHTML, devStylesTailwind, previewReload));
+	watch(["./src/html/**/*.html", "./src/components/**/*.html"], series(devHTML, devStylesTailwind, previewReload));
 
 	console.log("\n\t" + logSymbols.info, "Watching for Changes..\n");
 }
@@ -350,6 +355,7 @@ exports.default = series(
 
 exports.prod = series(
 	clean,
+	cleanImg,
 	prodScripts,
 	imagesOptimize,
 	svgSprite,
