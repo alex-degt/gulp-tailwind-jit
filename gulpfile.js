@@ -1,3 +1,6 @@
+// npm run dev - запуск сборки (в режиме разработки)
+// npm run prod - собрать production-версию
+
 const { src, dest, task, watch, series, parallel } = require("gulp");
 
 // Общие модули
