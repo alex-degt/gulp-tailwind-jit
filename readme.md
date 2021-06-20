@@ -21,7 +21,7 @@ npm run prod
 
 - глобальное подключение файла в файл (путь от текущего файла)
 ```
-//= ../components/component/component.js
+//= ../components/button/button.js
 ```
 - линтер (ES Lint)
 - конкатенация
@@ -31,7 +31,7 @@ npm run prod
 - фреймворк Tailwind CSS (JIT)
 - глобальное подключение файла в файл (путь от корня проекта)
 ```
-@@include('./src/html/sections/header.html')
+@@include('./src/components/button/button.html')
 ```
 - удаление комментариев (только для production-версии билда)
 
@@ -39,7 +39,7 @@ npm run prod
 
 - глобальное подключение файла в файл (путь от текущего файла)
 ```
-@import "./base/_fonts"
+@import "../components/button/button.sass"
 ```
 - SCSS (SASS синтаксис)
 - конкатенация
