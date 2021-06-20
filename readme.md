@@ -1,9 +1,10 @@
-# Описание gulp-сборки
+# Gulp 4 + Tailwind CSS (JIT) Starter Kit
 
-**Starter Gulp 4 + Tailwind CSS (JIT)**
-
+Установить все пакеты:
 ```
 npm i // - установить все пакеты
+```
+```
 npm run dev // - запуск сервера в режиме разработки
 npm run prod // - собрать prod-версию вёрстки
 ```
