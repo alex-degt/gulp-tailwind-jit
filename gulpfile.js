@@ -82,7 +82,7 @@ function svgSprite() {
 				removeUnknownsAndDefaults: true,
 				removeNonInheritableGroupAttrs: true,
 				removeUselessStrokeAndFill: true,
-				removeViewBox: true,
+				removeViewBox: false,
 				cleanupEnableBackground: true,
 				removeHiddenElems: true,
 				removeEmptyText: true,
