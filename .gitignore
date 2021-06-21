@@ -11,4 +11,6 @@ npm-debug/
 Thumbs.db
 docs/
 src/img/dest/
+src/sass/tailwind/a.tailwind.css
+src/sass/tailwind/main.css
 package-lock.json
