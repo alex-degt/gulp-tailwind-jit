@@ -239,7 +239,7 @@ function watchFiles() {
 	// Подготовка SVG для спрайта
 	watch("./src/img/src/for-sprite/**/*", svgSprite);
 	// Скопировать изображения если они изменились
-	watch("./src/img/dest/**/*", copyImg);
+	watch("./src/img/dest/**/*", series(copyImg, previewReload));
 	// Fonts
 	watch("./src/fonts/**/*", series(copyFonts, previewReload));
 	// Libs

@@ -1,3 +1,3 @@
-$("#button").click(function() {
-	$(this).text("Кнопку кто-то нажал :(")
-})
+$("#button").click(function () {
+	$(this).find("span").text("Кнопку кто-то нажал :(");
+});
