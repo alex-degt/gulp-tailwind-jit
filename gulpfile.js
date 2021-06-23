@@ -153,9 +153,9 @@ function devScripts() {
 			plumber({
 				errorHandler: notify.onError(function (err) {
 					return {
-						title: "JS",
+						title: logSymbols.error + " JS " + logSymbols.error,
 						sound: false,
-						message: err.message,
+						message: "\n" + err.message,
 					};
 				}),
 			})
@@ -184,9 +184,9 @@ function devStyles() {
 			plumber({
 				errorHandler: notify.onError(function (err) {
 					return {
-						title: "Styles",
+						title: logSymbols.error + " SASS " + logSymbols.error,
 						sound: false,
-						message: err.message,
+						message: "\n" + err.message,
 					};
 				}),
 			})
@@ -204,9 +204,9 @@ function devHTML() {
 			plumber({
 				errorHandler: notify.onError(function (err) {
 					return {
-						title: "JS",
+						title: logSymbols.error + " HTML " + logSymbols.error,
 						sound: false,
-						message: err.message,
+						message: "\n" + err.message,
 					};
 				}),
 			})
