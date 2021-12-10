@@ -26,14 +26,10 @@ npm run prod
 - линтер (ES Lint)
 - конкатенация
 
-## 2. HTML
+## 2. HTML (PUG)
 
 - фреймворк Tailwind CSS (JIT)
-- глобальное подключение файла в файл (путь от корня проекта)
-```
-@@include('./src/components/button/button.html')
-```
-- удаление комментариев (только для production-версии билда)
+- препроцессор PUG
 
 ## 3. CSS
 
@@ -48,8 +44,7 @@ npm run prod
 
 ## 4. JPG, PNG
 
-- сжимаем все изображения в папке **src/img/src/** кроме **src/img/src/for-sprite**
-- перемещаем после сжатия в **src/img/dest/**
+- оработка (сжатие) изображений вырезана ввиду специфики проектов
 
 ## 5. SVG
 
@@ -60,32 +55,3 @@ npm run prod
 - меняем все **fill** и **stroke** на **currentColor**
 - сохраняем файл **src/img/dest/sprite.svg**
 - подключаем его на страницу (на этапе сборки)
-
-## Нюансы используемых модулей
-
-**gulp-file-include**
-
-- Что делает: подключает один HTML файл в другой
-- Синтаксис: @@include('./file.svg')
-- Важно использовать одинарные кавычки
-- basepath: "@root" - путь от корня проекта
-- При форматировании плагином (к примеру - Prettier) HTML в самом редакторе происходит перенос строк:
-
-До форматирования:
-```
- @@include('./src/file-1.html')
- @@include('./src/file-2.html')
- @@include('./src/file-3.html')
-```
-После форматирования:
-```
- @@include('./src/file-1.html')@@include('./src/file-2.html')@@include('./src/file-3.html')
-```
-
-**Решение проблемы** - запретить редактору (в случае с Prettier) форматировать фрагмент кода, который находится сразу после комментария.
-```
-  <!-- prettier-ignore -->
-  @@include('./src/file-1.html')
-  @@include('./src/file-2.html')
-  @@include('./src/file-3.html')
-```

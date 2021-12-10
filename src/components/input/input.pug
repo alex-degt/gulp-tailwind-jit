@@ -1,0 +1,15 @@
+mixin input(object)
+	div(class=`form-input ${object.wrapperClasses}`)
+		label(class="group flex flex-col-reverse")
+			input(class="hover:border-primary-800 focus:border-primary-600 px-4 py-3 text-black placeholder-gray-400 transition border border-gray-400 rounded outline-none" type=`${object.type}` placeholder=`${object.placeholder}`)
+			span(class=`form-input__desc font-semibold text-black ${object.labelClass}`)
+				| #{object.label}
+		span(class="form-input__error text-error text-xs leading-5")
+
+//- +input({
+//- 	wrapperClasses: "w-full",
+//- 	type: "text",
+//- 	placeholder: "Placeholder",
+//- 	label: "label",
+//- 	labelClass: "text-base mb-1.5",
+//- })

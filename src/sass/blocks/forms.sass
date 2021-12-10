@@ -45,3 +45,57 @@ a:disabled
 		color: #fff
 		background: var(--gray-300)
 		border-color: var(--gray-300)
+
+.form-input
+	// Ховер по всему лейблу
+	label:hover
+		transition: 0.15s
+		// Radio (NOT checked)
+		input:not(:checked) + .fake-radio
+			border-color: var(--gray-800)
+			background-color: var(--gray-100)
+
+.fake-radio
+	position: relative
+	display: block
+	flex-shrink: 0
+	width: 14px
+	height: 14px
+	border: 1px solid #858585
+	border-radius: 50%
+	transition: 0.15s
+	&::before
+		position: absolute
+		top: 50%
+		left: 50%
+		display: none
+		width: 8px
+		height: 8px
+		border-radius: 50%
+		background-color: var(--primary-500)
+		background-position: center
+		background-repeat: no-repeat
+		content: ""
+		transform: translate(-50%, -50%)
+
+.form-input.form-input--invalid
+	input,
+	input:focus,
+	input:hover,
+	input:active,
+	.select2-container--default .select2-selection--single,
+	.select2-container--default .select2-selection--single:hover
+		border-color: var(--error)
+	.fake-checkbox,
+	.fake-radio
+		border-color: var(--error)
+	input:checked + .fake-checkbox,
+	input:checked + .fake-radio
+		border-color: var(--error)
+	label:hover
+		input:not(:checked) + .fake-checkbox,
+		input:not(:checked) + .fake-radio
+			border-color: var(--error)
+		input:checked + .fake-checkbox,
+		input:checked + .fake-radio
+			border-color: var(--primary-500)

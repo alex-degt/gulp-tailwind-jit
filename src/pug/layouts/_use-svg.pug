@@ -1,0 +1,5 @@
+mixin useSvg(width, height, iconName, svgClass)
+	svg(width="" + width height="" + height class="" + svgClass fill="none")
+		use(xlink:href="#icon-" + iconName)
+
+//- +useSvg("width", "height", "iconName", "class")
