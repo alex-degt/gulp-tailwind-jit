@@ -49,8 +49,6 @@ npm run prod
 ## 5. SVG
 
 - всё что внутри **src/img/src/for-sprite** - будет собрано в SVG-инлайн спрайт
-- очищаем SVG с помощью SVGO (настройки и их последовательность соответствует компрессору https://jakearchibald.github.io/svgomg/)
-- собираем в спрайт
 - форматируем
 - меняем все **fill** и **stroke** на **currentColor**
 - сохраняем файл **src/img/dest/sprite.svg**

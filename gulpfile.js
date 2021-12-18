@@ -32,7 +32,6 @@ const eslint = require("gulp-eslint"); // JS линтер
 const rigger = require("gulp-rigger"); // include JS в JS (//= ./file.js)
 
 // IMG
-const svgo = require("gulp-svgo"); // Сжатие SVG
 const svgstore = require("gulp-svgstore"); // Создание SVG-спрайта
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -55,52 +54,6 @@ function imagesOptimize() {
 
 function svgSprite() {
 	return src(["./src/img/src/for-sprite/**/*.svg"])
-		.pipe(
-			svgo({
-				removeDoctype: true,
-				removeXMLProcInst: true,
-				removeComments: true,
-				removeMetadata: true,
-				removeXMLNS: false,
-				removeEditorsNSData: true,
-				cleanupAttrs: true,
-				inlineStyles: true,
-				minifyStyles: true,
-				convertStyleToAttrs: true,
-				cleanupIDs: true,
-				removeRasterImages: true,
-				removeUselessDefs: true,
-				cleanupListOfValues: true,
-				cleanupNumericValues: true,
-				convertColors: true,
-				removeUnknownsAndDefaults: true,
-				removeNonInheritableGroupAttrs: true,
-				removeUselessStrokeAndFill: true,
-				removeViewBox: false,
-				cleanupEnableBackground: true,
-				removeHiddenElems: true,
-				removeEmptyText: true,
-				convertShapeToPath: true,
-				moveElemsAttrsToGroup: true,
-				moveGroupAttrsToElems: true,
-				collapseGroups: true,
-				convertEllipseToCircle: true,
-				convertTransform: true,
-				removeEmptyAttrs: true,
-				removeEmptyContainers: true,
-				mergePaths: true,
-				removeUnusedNS: true,
-				reusePaths: true,
-				sortAttrs: true,
-				sortDefsChildren: true,
-				removeTitle: true,
-				removeDes: true,
-				removeDimensions: true,
-				removeStyleElement: true,
-				removeScriptElement: true,
-				convertPathData: true,
-			})
-		)
 		.pipe(svgstore({ inlineSvg: true }))
 		.pipe(
 			prettyData({
@@ -115,8 +68,16 @@ function svgSprite() {
 			cheerio({
 				run: function ($) {
 					$("svg").attr("style", "display:none");
-					$("[fill]").attr("fill", "currentColor");
-					$("[stroke]").attr("stroke", "currentColor");
+
+					$("symbol").each(function () {
+						if ($(this).find("path").attr("fill") !== undefined) {
+							$(this).find("path").attr("fill", "currentColor");
+						}
+
+						if ($(this).find("path").attr("stroke") !== undefined) {
+							$(this).find("path").attr("stroke", "currentColor");
+						}
+					});
 				},
 				parserOptions: { xmlMode: true },
 			})
